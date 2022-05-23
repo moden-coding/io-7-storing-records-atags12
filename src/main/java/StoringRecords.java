@@ -1,4 +1,6 @@
-
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -24,6 +26,20 @@ public class StoringRecords {
         ArrayList<Person> persons = new ArrayList<>();
 
         // Write here the code for reading from file
+
+        try (BufferedReader br = new BufferedReader(new FileReader(new File(file)))) {
+            String line = br.readLine();
+            while (line != null) {
+                String[] parts = line.split(",");
+                String name = parts[0];
+                int age = Integer.valueOf(parts[1]);
+                persons.add(new Person(name, age));
+                line = br.readLine();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
         // and printing the read records
         return persons;
 
